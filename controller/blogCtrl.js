@@ -1,7 +1,7 @@
 const Blog = require("../models/blogModel");
 const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
-const validateMongoDbId = require("../utils/validateMongodbId");
+const validateMongodbId = require("../utils/validateMongodbId");
 const cloudinaryUploadImg = require("../utils/cloudinary");
 const fs = require("fs");
 const createBlog = asyncHandler(async (req, res) => {
@@ -15,7 +15,7 @@ const createBlog = asyncHandler(async (req, res) => {
 
 const updateBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  validateMongoDbId(id);
+  validateMongodbId(id);
   try {
     const updateBlog = await Blog.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -28,7 +28,7 @@ const updateBlog = asyncHandler(async (req, res) => {
 
 const getBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  validateMongoDbId(id);
+  validateMongodbId(id);
   try {
     const getBlog = await Blog.findById(id)
       .populate("likes")
@@ -56,7 +56,7 @@ const getAllBlogs = asyncHandler(async (req, res) => {
 
 const deleteBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  validateMongoDbId(id);
+  validateMongodbId(id);
   try {
     const deletedBlog = await Blog.findByIdAndDelete(id);
     res.json(deletedBlog);
@@ -67,7 +67,7 @@ const deleteBlog = asyncHandler(async (req, res) => {
 
 const liketheBlog = asyncHandler(async (req, res) => {
   const { blogId } = req.body;
-  validateMongoDbId(blogId);
+  validateMongodbId(blogId);
   // Find the blog which you want to be liked
   const blog = await Blog.findById(blogId);
   // find the login user
@@ -113,7 +113,7 @@ const liketheBlog = asyncHandler(async (req, res) => {
 });
 const disliketheBlog = asyncHandler(async (req, res) => {
   const { blogId } = req.body;
-  validateMongoDbId(blogId);
+  validateMongodbId(blogId);
   // Find the blog which you want to be liked
   const blog = await Blog.findById(blogId);
   // find the login user
@@ -160,7 +160,7 @@ const disliketheBlog = asyncHandler(async (req, res) => {
 
 const uploadImages = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  validateMongoDbId(id);
+  validateMongodbId(id);
   try {
     const uploader = (path) => cloudinaryUploadImg(path, "images");
     const urls = [];
